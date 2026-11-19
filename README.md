@@ -6,39 +6,32 @@ for the ones worth sending.
 
 ## Why
 
-Applying seriously means reading every posting in full: the location, the work model,
-the language requirement and the hours are often wrong or missing in search results.
-At the volume of a real search, that is not possible by hand. This system does not
-replace judgement. It makes the same judgement applicable to every posting, and writes
-down why each one was kept or dropped.
+Applying seriously means reading every posting in full, and at a real search volume
+that is impossible by hand. The system does not replace judgement; it applies the same
+judgement to every posting and records why each one was kept or dropped.
 
-It has been in service since 08/2026, running every 48 hours from a scheduled task.
-The log holds more than 650 entries. The last documented run (19.11.2026) saw and
-deduplicated 121 postings, kept 8 after a full read, produced 5 application packages
-(10 PDFs) and had 0 quality-check failures.
+In service since 08/2026, one run every 48 hours from a scheduled task, more than 650
+log entries. Last documented run (19.11.2026): 121 postings seen and deduplicated,
+8 kept after a full read, 5 packages (10 PDFs), 0 quality-check failures.
 
 ## How it works
 
-1. **Load context.** Before any search, the agent rereads its rule set, the skill profile,
-   the log of postings already seen and the exclusion list. Without this step it would
-   write to the same company twice.
-2. **Query sources.** Structured job sources filtered by date, radius and work model, plus
-   web search and employers' own career pages. Querying broadly and filtering locally
-   returns measurably more than a narrow query.
-3. **Read each posting in full.** Nothing is scored from a search-result snippet. The
-   posting is opened, read entirely, and its availability is rechecked the same day.
-   Aggregators regularly report the wrong city, region or work model.
+1. **Load context.** Reread the rule set, skill profile, log of postings already seen and
+   exclusion list. Without this, the agent would write to the same company twice.
+2. **Query sources.** Structured sources filtered by date, radius and work model, plus web
+   search and career pages. Querying broadly and filtering locally returns measurably
+   more than a narrow query.
+3. **Read each posting in full.** Never score from a snippet; recheck availability the
+   same day. Aggregators regularly report the wrong city, region or work model.
 4. **Score.** Six weighted criteria, and separate hard requirements.
-5. **Generate documents.** For each posting above the threshold, a CV and a cover letter
-   tailored to it, exported to PDF with metadata stripped.
-6. **Verify and record.** Every PDF is checked automatically, the run report explains each
-   decision, the log is updated and a notification is sent. Every rejected posting is
-   recorded with its reason.
+5. **Generate documents.** A tailored CV and cover letter per selected posting, as PDF
+   with metadata stripped.
+6. **Verify and record.** Automatic PDF check, a report explaining each decision, log
+   update, notification. Every rejected posting is recorded with its reason.
 
-A run produces a Markdown report, an updated CSV and XLSX log, the PDF packages, email
-drafts and a notification. See [`examples/sample-run-report.md`](examples/sample-run-report.md)
-(fictional employers) and the full eleven-step
-[`docs/agent-specification.md`](docs/agent-specification.md).
+Output: a Markdown report, the log as CSV and XLSX, PDF packages, email drafts, a
+notification. See the [sample run report](examples/sample-run-report.md) (fictional
+employers) and the eleven-step [agent specification](docs/agent-specification.md).
 
 ## Scoring model
 
@@ -51,17 +44,15 @@ drafts and a notification. See [`examples/sample-run-report.md`](examples/sample
 | `FRESHNESS`     |     10 | age of the posting                                                    |
 | `LEARNING`      |      8 | what the role would teach that cannot be learned alone                |
 
-An application is prepared at 70 points out of 100. The weighting favours small
-employers on purpose: a careful student application is read by a person at a
-twenty-person company, and by screening software at a twenty-thousand-person one.
+The send threshold is 70 out of 100. Small employers are favoured on purpose: a careful
+student application is read by a person at a twenty-person company, and by screening
+software at a twenty-thousand-person one.
 
-**Hard requirements are kept out of the score.** A required language level above the one
-the candidate can prove is not a weakness to address in a cover letter, it is a wall.
-Folding it into one number produces postings that look attractive and cannot be won.
-A posting that fails a hard requirement is rejected without being scored, and every
-failed requirement is recorded as the reason.
-
-Exact scales and the reasoning behind them: [`docs/scoring-model.md`](docs/scoring-model.md).
+**Hard requirements are kept out of the score.** A language level above the one the
+candidate can prove is not a weakness to address in a letter, it is a wall. Folding it
+into the score produces postings that look attractive and cannot be won. Such a posting
+is rejected unscored, with every failed requirement recorded. Details:
+[`docs/scoring-model.md`](docs/scoring-model.md).
 
 ## Rules the agent may not break
 
@@ -80,10 +71,9 @@ Exact scales and the reasoning behind them: [`docs/scoring-model.md`](docs/scori
 
 ## What is in this repository, and what is not
 
-This repository contains the agent specification, the scoring model and the scoring
-module in Java. It does not contain the application log, the operational rules or the
-run reports, because they hold data about third parties: employers, recruiters and
-their replies. The `.gitignore` excludes those files by type.
+Included: the agent specification, the scoring model and the Java scoring module.
+Not included: the application log, the operational rules and the run reports, because
+they hold data about third parties. The `.gitignore` excludes them by type.
 
 ## Running the scoring module
 
@@ -103,9 +93,7 @@ its instructions from a specification file, not from code in this repository.
 
 ## Limitations
 
-- The system decides nothing on its own: nothing is sent without human approval.
-- The score is a heuristic, not a prediction. It says nothing about whether an
-  application will succeed.
-- Portals that require a login cannot be automated. The agent prepares the package;
-  a human signs in and submits it.
-- The weights are tuned for one profile and one market, and do not transfer as they are.
+- Nothing is sent without human approval.
+- The score is a heuristic, not a prediction of success.
+- Portals behind a login are not automated: the agent prepares, a human submits.
+- The weights are tuned for one profile and one market and do not transfer as they are.
