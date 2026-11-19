@@ -1,7 +1,8 @@
 # Run report — 2026-11-03
 
 > **Illustrative example.** The employers (Example GmbH, Northgate Systems, Lindhof
-> Software), postings and figures below are fictional. The structure is the one every
+> Software, and the placeholders Employer D and Employer E), postings and figures below
+> are fictional. The structure is the one every
 > real run produces. Scores were computed with the scoring module in this repository.
 
 ## Run header
@@ -19,9 +20,11 @@
 | Rejected on a hard requirement           | 3                             |
 | Scored                                   | 5                             |
 | At or above the send threshold (70)      | 3                             |
-| Application packages / PDFs              | 3 / 6                         |
-| PDF quality check                        | 6 passed, 0 failed            |
-| Email drafts created (not sent)          | 3                             |
+| Quota: spontaneous applications          | 2 of 2                        |
+| Quota: designated-region posting         | 1 of 1 (relaxed threshold)    |
+| Application packages / PDFs              | 6 / 12                        |
+| PDF quality check                        | 12 passed, 0 failed           |
+| Email drafts created (not sent)          | 6                             |
 
 ## Top 3
 
@@ -45,10 +48,25 @@ the commute is moderate. Contact address taken from the employer's careers page.
 | 1 | Example GmbH      | Working Student Backend Development    |  26 |  20 |  15 |   7 |   9 |   6 |    83 | package prepared |
 | 2 | Northgate Systems | Working Student IT Automation          |  26 |  10 |  15 |   9 |  10 |   8 |    78 | package prepared |
 | 3 | Lindhof Software  | Working Student Software Testing       |  35 |  16 |   9 |   5 |   8 |   4 |    77 | package prepared |
-| 4 | Example GmbH      | Working Student IT Support             |  12 |  20 |   8 |   5 |   6 |   2 |    53 | logged, below threshold |
+| 4 | Example GmbH      | Working Student IT Support             |  12 |  20 |   8 |   5 |   6 |   2 |    53 | package prepared (regional quota) |
 | 5 | Northgate Systems | Working Student Data Platform          |   9 |  10 |   2 |   3 |   3 |   8 |    35 | logged, below threshold |
 
 Weights: FIT 35 · VISIBILITY 20 · ACCESSIBILITY 15 · PAY 12 · FRESHNESS 10 · LEARNING 8.
+
+## Quota targets
+
+The quotas are set in the brief and do not depend on what the search returned. Every
+target passed the employer filter and has a contact address the employer published
+itself.
+
+| Quota                     | Employer     | Target                                   | Contact source               | Decision         |
+|---------------------------|--------------|------------------------------------------|------------------------------|------------------|
+| Designated region         | Example GmbH | Working Student IT Support (scored 53)   | posting page                 | package prepared |
+| Spontaneous application   | Employer D   | backend team, no open posting            | employer's careers page      | package prepared |
+| Spontaneous application   | Employer E   | IT operations, no open posting           | employer's imprint page      | package prepared |
+
+The designated-region posting is the best-scoring eligible posting in that region; it
+falls below 70 but meets the relaxed threshold the brief sets for this quota.
 
 ## Rejected postings
 
@@ -69,4 +87,7 @@ Weights: FIT 35 · VISIBILITY 20 · ACCESSIBILITY 15 · PAY 12 · FRESHNESS 10 �
   week. The record uses the employer's page, and the commute is scored.
 - **Source timeout.** One structured source did not answer on the first request; the
   retry succeeded. No postings were lost.
+- **Spontaneous candidate replaced.** The first employer selected for a spontaneous
+  application publishes no contact address of its own, only a form on a job board.
+  It was not counted towards the quota and Employer E was selected instead.
 - **No bounces.** All applications from the previous run were delivered.
