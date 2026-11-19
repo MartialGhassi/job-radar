@@ -31,7 +31,7 @@ log entries. Last documented run (19.11.2026): 121 postings seen and deduplicate
 
 Output: a Markdown report, the log as CSV and XLSX, PDF packages, email drafts, a
 notification. See the [sample run report](examples/sample-run-report.md) (fictional
-employers) and the eleven-step [agent specification](docs/agent-specification.md).
+employers) and the fifteen-step [agent specification](docs/agent-specification.md).
 
 ## Scoring model
 
