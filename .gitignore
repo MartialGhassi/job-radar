@@ -1,0 +1,16 @@
+# Real operational data must never be committed.
+*.csv
+*.xlsx
+*.pdf
+*.docx
+.env
+reports/
+profile/
+rules/
+
+# Build output and IDE files
+build/
+.gradle/
+.idea/
+*.iml
+out/
