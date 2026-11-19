@@ -8,9 +8,8 @@ generically.
 The agent runs every 48 hours from a scheduled task. A run has fifteen steps. The brief
 itself is organised by scope and by quotas rather than as a pipeline: steps 4 and 5 are
 standing definitions the run reads, and step 12 is a quota the run must meet whatever
-the market published. Each step
-has a goal, inputs, outputs and guardrails. A step that fails its guardrail stops the
-run or drops the posting; it never continues on a guess.
+the market published. Each step has a goal, inputs, outputs and guardrails. A step that
+fails its guardrail stops the run or drops the posting; it never continues on a guess.
 
 ---
 
