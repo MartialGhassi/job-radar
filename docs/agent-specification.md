@@ -1,8 +1,9 @@
 # Agent specification
 
-This is the structure of the specification the agent reads at the start of every run.
-Personal values (thresholds, locations, language levels, the exclusion list) and every
-employer name have been removed; constraints are described generically.
+This describes a run step by step, as the agent's operating brief defines it. The brief
+itself is not reproduced here: personal values (thresholds, locations, language levels,
+the exclusion list) and every employer name are left out, and constraints are described
+generically.
 
 The agent runs every 48 hours from a scheduled task. A run has eleven steps. Each step
 has a goal, inputs, outputs and guardrails. A step that fails its guardrail stops the
